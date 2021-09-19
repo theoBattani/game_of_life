@@ -15,8 +15,11 @@ public class MainApp extends Application {
     @Override
     public void start(@SuppressWarnings("exports") Stage s) throws IOException {
         stage=s;
-        setRoot("main-menu","");
+        stage.setTitle("Game of life");
+        setRoot("main-menu");
     }
+
+    static void play() throws IOException {setRoot("game-view");}
 
     static void setRoot(String fxml) throws IOException {
         setRoot(fxml,stage.getTitle());

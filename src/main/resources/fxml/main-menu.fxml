@@ -2,24 +2,18 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.MainMenuController">
    <children>
-      <HBox prefHeight="480.0" prefWidth="640.0">
+      <Canvas fx:id="canvas" height="480.0" width="640.0" />
+      <VBox alignment="CENTER" prefHeight="480.0" prefWidth="640.0">
          <children>
-            <Canvas fx:id="leftCanvas" height="480.0" width="200.0" />
-            <VBox alignment="CENTER" prefWidth="240.0">
-               <children>
-                  <Button mnemonicParsing="false" prefWidth="200.0" styleClass="MenuButton" text="Play" />
-                  <Button mnemonicParsing="false" prefWidth="200.0" styleClass="MenuButton" text="Settings" />
-                  <Button mnemonicParsing="false" onAction="#onExitAction" prefWidth="200.0" styleClass="MenuButton" text="Exit" />
-               </children>
-            </VBox>
-            <Canvas fx:id="rightCanvas" height="480.0" layoutX="440.0" width="200.0" />
+            <Button mnemonicParsing="false" onAction="#onPlay" prefWidth="200.0" styleClass="MenuButton" text="Play" translateY="-32.0" />
+            <Button mnemonicParsing="false" prefWidth="200.0" styleClass="MenuButton" text="Settings" />
+            <Button mnemonicParsing="false" onAction="#onExitAction" prefWidth="200.0" styleClass="MenuButton" text="Exit" translateY="32.0" />
          </children>
-      </HBox>
+      </VBox>
    </children>
 </Pane>
