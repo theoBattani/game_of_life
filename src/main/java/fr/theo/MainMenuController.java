@@ -5,7 +5,7 @@
 package fr.theo;
 
 import java.net.URL;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -27,11 +27,13 @@ public class MainMenuController {
 
     @FXML // fx:id="leftCanvas"
     private Canvas leftCanvas; // Value injected by FXMLLoader
+
     private GraphicsContext leftGraphicsContext; 
     private Game leftGame;
 
     @FXML // fx:id="rightCanvas"
     private Canvas rightCanvas; // Value injected by FXMLLoader
+
     private GraphicsContext rightGraphicsContext; 
     private Game rightGame;
 
@@ -61,7 +63,7 @@ public class MainMenuController {
         timer = new AnimationTimer() {
             // int index;
             int counter = 0;
-            int count = 4;
+            int count = 128;
             @Override
             public void handle(long now) {
                 if (counter == 0) {
@@ -92,15 +94,15 @@ public class MainMenuController {
         }
     }
 
-    private void colorCells(ArrayList<Cell> cells, Game game, GraphicsContext gc) {
-        for (Cell cell: cells) {
-            if (cell.isAlive()) gc.setFill(Color.BLUE);
-            else gc.setFill(Color.DARKBLUE);
-            gc.fillRect(
-                cell.getPosition()[0] * 10, 
-                cell.getPosition()[1] * 10, 
-                10, 10
-            );
-        }
-    }
+    // private void colorCells(ArrayList<Cell> cells, Game game, GraphicsContext gc) {
+    //     for (Cell cell: cells) {
+    //         if (cell.isAlive()) gc.setFill(Color.BLUE);
+    //         else gc.setFill(Color.DARKBLUE);
+    //         gc.fillRect(
+    //             cell.getPosition()[0] * 10, 
+    //             cell.getPosition()[1] * 10, 
+    //             10, 10
+    //         );
+    //     }
+    // }
 }

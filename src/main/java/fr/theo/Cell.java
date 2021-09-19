@@ -56,7 +56,6 @@ public class Cell {
     public boolean nextStatus() {
         int numberOfNeighboursAlive = 0;
         boolean newStatus;
-        System.out.println(this.neighbourhood.size());
         for (Cell cell: this.neighbourhood) if (cell.isAlive()) {numberOfNeighboursAlive++;}
         if ((!this.isAlive()) && numberOfNeighboursAlive == 3) {newStatus = true;}
         else if (this.isAlive() && (numberOfNeighboursAlive == 2 || numberOfNeighboursAlive == 3)) {newStatus = true;}
