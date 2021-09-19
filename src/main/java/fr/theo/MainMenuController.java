@@ -27,15 +27,13 @@ public class MainMenuController {
 
     @FXML // fx:id="leftCanvas"
     private Canvas leftCanvas; // Value injected by FXMLLoader
-
     private GraphicsContext leftGraphicsContext; 
-    private Game leftGame;
+    private ArrayGame leftGame;
 
     @FXML // fx:id="rightCanvas"
     private Canvas rightCanvas; // Value injected by FXMLLoader
-
     private GraphicsContext rightGraphicsContext; 
-    private Game rightGame;
+    private ArrayGame rightGame;
 
     private AnimationTimer timer;
 
@@ -53,24 +51,24 @@ public class MainMenuController {
         leftGraphicsContext = leftCanvas.getGraphicsContext2D();
         rightGraphicsContext = rightCanvas.getGraphicsContext2D();
 
-        leftGame = new Game(20, 48);
-        leftGame.randomCells();
-        rightGame = new Game(20, 48);
-        rightGame.randomCells();
+        leftGame = new ArrayGame(20, 48);
+        leftGame.randomFill();
+        rightGame = new ArrayGame(20, 48);
+        rightGame.randomFill();
     }
 
     public MainMenuController() {
         timer = new AnimationTimer() {
             // int index;
             int counter = 0;
-            int count = 128;
+            int count = 4;
             @Override
             public void handle(long now) {
                 if (counter == 0) {
-                    leftGame.update();
-                    rightGame.update();
-                    renderGame(leftGame, leftGraphicsContext);
-                    renderGame(rightGame, rightGraphicsContext);
+                    leftGame.evolve();
+                    rightGame.evolve();
+                    renderArray(leftGame, leftGraphicsContext);
+                    renderArray(rightGame, rightGraphicsContext);
                     // colorCells(leftGame.getCells().get(index).getNeighbourhood(), leftGame, leftGraphicsContext);
                     // colorCells(rightGame.getCells().get(index).getNeighbourhood(), rightGame, rightGraphicsContext);
                     // index++;
@@ -81,18 +79,30 @@ public class MainMenuController {
         };
         timer.start();
     }
-    
-    private void renderGame(Game game, GraphicsContext gc) {
-        for (Cell cell: game.getCells()) {
-            if (cell.isAlive()) gc.setFill(Color.WHITE);
-            else gc.setFill(Color.BLACK);
+
+    public void renderArray(ArrayGame game, GraphicsContext gc) {
+        double CELL_SIZE = 10;    
+        for (int index = 0; index < game.getWidth() * game.getHeight(); index++) {
+            gc.setFill(game.getArray()[index] == 1? Color.WHITE: Color.BLACK);
             gc.fillRect(
-                cell.getPosition()[0] * 10, 
-                cell.getPosition()[1] * 10, 
-                10, 10
-            );
+                (index % game.getWidth()) * CELL_SIZE,
+                (index / game.getWidth()) * CELL_SIZE,
+                CELL_SIZE, CELL_SIZE);
         }
     }
+    
+    
+    // private void renderGame(Game game, GraphicsContext gc) {
+    //     for (Cell cell: game.getCells()) {
+    //         if (cell.isAlive()) gc.setFill(Color.WHITE);
+    //         else gc.setFill(Color.BLACK);
+    //         gc.fillRect(
+    //             cell.getPosition()[0] * 10, 
+    //             cell.getPosition()[1] * 10, 
+    //             10, 10
+    //         );
+    //     }
+    // }
 
     // private void colorCells(ArrayList<Cell> cells, Game game, GraphicsContext gc) {
     //     for (Cell cell: cells) {
