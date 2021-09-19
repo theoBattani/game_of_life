@@ -7,18 +7,28 @@ public class Cell {
     private Game game; 
 
     private boolean status;
-    private ArrayList<Cell> neighbours;
+    private ArrayList<Cell> neighbourhood;
     private long index;
 
     public Cell(Game game, long index) {
         this.status = false;
         this.game = game;
         this.index = index;
+        this.neighbourhood = new ArrayList<Cell>();
+        this.neighbourhood.add(this);
     }
+
+    public void setStatus(boolean newStatus) {this.status = newStatus;}
 
     public boolean getStatus() {return this.status;}
     public long getIndex() {return this.index;}
-    public ArrayList<Cell> getNeighbours() {return this.neighbours;}
+    public ArrayList<Cell> getNeighbourhood() {return this.neighbourhood;}
+
+    public boolean isAlive() {return this.getStatus();}
+
+    public void setRandomStatus() {
+        this.setStatus(Math.random() > 0.5);
+    }
 
     public long[] getPosition() {
         return new long[] {
@@ -36,6 +46,34 @@ public class Cell {
     }
 
     public boolean isNeighbourOf(Cell other) {
-        return false;
+        return this.squareDistanceTo(other) == 1.0 || this.squareDistanceTo(other) == 2.0;
+    }
+    
+    public void addNeighbour(Cell newNeighbour) {
+        this.neighbourhood.add(newNeighbour);
+    }
+
+    public boolean nextStatus() {
+        int numberOfNeighboursAlive = 0;
+        boolean newStatus;
+        System.out.println(this.neighbourhood.size());
+        for (Cell cell: this.neighbourhood) if (cell.isAlive()) {numberOfNeighboursAlive++;}
+        if ((!this.isAlive()) && numberOfNeighboursAlive == 3) {newStatus = true;}
+        else if (this.isAlive() && (numberOfNeighboursAlive == 2 || numberOfNeighboursAlive == 3)) {newStatus = true;}
+        else {newStatus = false;}
+        return newStatus;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

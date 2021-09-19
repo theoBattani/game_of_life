@@ -16,6 +16,7 @@ public class Game {
 
     public long getWidth() {return this.width;}
     public long getHeight() {return this.height;}
+    public ArrayList<Cell> getCells() {return this.cells;}
 
     private void initCells() {
         this.cells = new ArrayList<Cell>();
@@ -24,8 +25,21 @@ public class Game {
             Cell newCell = new Cell(this, index);
             this.cells.add(newCell);
             for (Cell cell: this.cells) {
-                System.out.printf("%d, %d : %f\n", newCell.getIndex(), cell.getIndex(), newCell.squareDistanceTo(cell));
+                if (cell.isNeighbourOf(newCell)) {
+                    newCell.addNeighbour(cell);
+                    cell.addNeighbour(newCell);
+                }
             }
         }
+    }
+
+    public void randomCells() {
+        for (Cell cell: this.cells) cell.setRandomStatus();
+    }
+
+    public void update() {
+        boolean[] nextStatus = new boolean[this.cells.size()];
+        for (Cell cell: this.cells) nextStatus[(int) cell.getIndex()] = cell.nextStatus();
+        for (Cell cell: this.cells) cell.setStatus(nextStatus[(int) cell.getIndex()]);
     }
 }
