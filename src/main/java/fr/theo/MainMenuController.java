@@ -81,13 +81,15 @@ public class MainMenuController {
     }
 
     public void renderArray(ArrayGame game, GraphicsContext gc) {
-        double CELL_SIZE = 10;    
         for (int index = 0; index < game.getWidth() * game.getHeight(); index++) {
+            int i = index % game.getWidth();
+            int j = index / game.getWidth();
+            double x = i * 10;
+            double y = j * 10;
             gc.setFill(game.getArray()[index] == 1? Color.WHITE: Color.BLACK);
-            gc.fillRect(
-                (index % game.getWidth()) * CELL_SIZE,
-                (index / game.getWidth()) * CELL_SIZE,
-                CELL_SIZE, CELL_SIZE);
+            gc.fillRect(x, y, 10, 10);
+            gc.setFill(Color.YELLOW);
+            gc.fillText(String.format("%d", game.countNeighbours(index)), x, y);
         }
     }
     

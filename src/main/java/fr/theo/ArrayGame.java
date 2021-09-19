@@ -17,22 +17,22 @@ public class ArrayGame {
         this.future = new int[this.width * this.height];
     }
 
-    private int countNeighbours(int index) {
+    public int countNeighbours(int index) {
         if (index % this.width == 0) {
             if (index / this.width == 0) {
                 return this.array[index+1] + this.array[index+this.width] + this.array[index+this.width+1];
             }
-            if (index / this.width == this.height - 1) {
+            else if (index / this.width == this.height - 1) {
                 return this.array[index+1] + this.array[index-this.width] + this.array[index-this.width+1];
             }
             return  this.array[index-this.width]   + this.array[index+this.width] +
                     this.array[index-this.width+1] + this.array[index+1] + this.array[index+this.width+1];
         }
-        if (index % this.width == this.width - 1) {
+        else if (index % this.width == this.width - 1) {
             if (index / this.width == 0) {
                 return this.array[index-1] + this.array[index+this.width] + this.array[index+this.width-1];
             }
-            if (index / this.width == this.height - 1) {
+            else if (index / this.width == this.height - 1) {
                 return this.array[index-1] + this.array[index-this.width] + this.array[index-this.width-1];
             }
             return  this.array[index-this.width]   + this.array[index+this.width] +
@@ -42,7 +42,7 @@ public class ArrayGame {
             return  this.array[index-1]            + this.array[index+1] +
                     this.array[index+this.width-1] + this.array[index+this.width] + this.array[index+this.width+1];
         }
-        if (index / this.width == this.height - 1) {
+        else if (index / this.width == this.height - 1) {
             return  this.array[index-1]            + this.array[index+1] +
                     this.array[index-this.width-1] + this.array[index-this.width] + this.array[index-this.width+1];
         }
@@ -68,8 +68,8 @@ public class ArrayGame {
     }
 
     public void evolve() {
-        this.array = this.future;
-        this.computeFuture();
+        for (int index = 0; index < this.width * this.height; index++) this.array[index] = this.future[index];
+        this.computeFuture(); 
     }
 
     public void randomFill() {
