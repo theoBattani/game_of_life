@@ -61,11 +61,6 @@ public class GameController {
     }
 
     @FXML
-    void onExit(ActionEvent event) {
-      System.exit(0);
-    }
-
-    @FXML
     void onNext(ActionEvent event) {
       game.next();
       redraw();
@@ -88,8 +83,19 @@ public class GameController {
     }
 
     @FXML
+    void onClear(ActionEvent event) {
+      game.clear();
+      redraw();
+    }
+
+    @FXML
     void onMenu(ActionEvent event) throws IOException {
       MainApp.menu();
+    }
+
+    @FXML
+    void onExit(ActionEvent event) {
+      System.exit(0);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

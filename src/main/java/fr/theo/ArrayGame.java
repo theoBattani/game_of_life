@@ -87,9 +87,16 @@ public class ArrayGame {
         this.computeFuture(); 
     }
 
+    public void clear() {
+        for (int index = 0; index < this.width * this.height; index++) {
+            this.past[index] = 0;
+            this.array[index] = 0;
+            this.future[index] = 0;
+        }
+    }
+
     public void addCell(int x, int y) {
         int index = (y * (this.width)) + x;
-        System.out.printf("in add : %d\n", index);
         this.array[index] = 1;
         this.computeFuture();
     }
