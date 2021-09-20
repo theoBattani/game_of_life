@@ -109,6 +109,7 @@ public class GameController {
 
     public GameController() {
       timer = new AnimationTimer(){
+        private long time;
         @Override
         public void handle(long now) {
           game.evolve();
@@ -125,7 +126,7 @@ public class GameController {
         for (int index = 0; index < game.getWidth() * game.getHeight(); index++) {
             gc.setFill(game.getArray()[index] == 1? Color.GREEN: Color.DARKGREY);
             gc.fillRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
-            gc.setStroke(Color.BLACK);
+            gc.setStroke(Color.web("#ddd"));
             gc.strokeRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
         }
     }
