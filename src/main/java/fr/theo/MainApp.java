@@ -20,6 +20,7 @@ public class MainApp extends Application {
     }
 
     static void play() throws IOException {setRoot("game-view");}
+    static void menu() throws IOException {setRoot("main-menu");}
 
     static void setRoot(String fxml) throws IOException {
         setRoot(fxml,stage.getTitle());

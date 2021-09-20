@@ -75,6 +75,25 @@ public class ArrayGame {
         this.computeFuture(); 
     }
 
+    public void next() {
+        for (int index = 0; index < this.width * this.height; index++) this.past[index] = this.array[index];
+        for (int index = 0; index < this.width * this.height; index++) this.array[index] = this.future[index];
+        this.computeFuture(); 
+    }
+
+    public void previous() {
+        for (int index = 0; index < this.width * this.height; index++) this.array[index] = this.past[index];
+        for (int index = 0; index < this.width * this.height; index++) this.future[index] = this.array[index];
+        this.computeFuture(); 
+    }
+
+    public void addCell(int x, int y) {
+        int index = (y * (this.width)) + x;
+        System.out.printf("in add : %d\n", index);
+        this.array[index] = 1;
+        this.computeFuture();
+    }
+
     public void randomFill() {
         for (int index = 0; index < this.width * this.height; index++) {
             this.array[index] = Math.random() < 0.5? 1: 0;
