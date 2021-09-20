@@ -30,12 +30,34 @@ public class GameController {
     private ArrayGame game;
     private AnimationTimer timer;
 
+    private boolean mousePressed;
+
     @FXML
     void mousePressedCanvas(MouseEvent event) {
+      mousePressed = true;
       int x = (int) Math.floor(event.getX() / 10);
       int y = (int) Math.floor(event.getY() / 10);
       game.addCell(x, y);
       redraw();
+    }
+    
+    @FXML
+    void mouseDraggedOnCanvas(MouseEvent event) {
+      if (mousePressed) {
+        int x = (int) Math.floor(event.getX() / 10);
+        int y = (int) Math.floor(event.getY() / 10);
+        game.addCell(x, y);
+        redraw();
+      }
+    }
+
+    @FXML
+    void mouseReleasedOnCanvas(MouseEvent event) {
+      int x = (int) Math.floor(event.getX() / 10);
+      int y = (int) Math.floor(event.getY() / 10);
+      game.addCell(x, y);
+      redraw();
+      mousePressed = false;
     }
 
     @FXML
@@ -57,12 +79,12 @@ public class GameController {
 
     @FXML
     void onPause(ActionEvent event) {
-      System.out.println("pause");
+      timer.stop();
     }
 
     @FXML
     void onPlay(ActionEvent event) {
-      System.out.println("play");
+      timer.start();
     }
 
     @FXML
@@ -76,6 +98,17 @@ public class GameController {
       graphicsContext = canvas.getGraphicsContext2D();
       game = new ArrayGame(64, 40);
       renderArray(game, graphicsContext);
+      mousePressed = false;
+    }
+
+    public GameController() {
+      timer = new AnimationTimer(){
+        @Override
+        public void handle(long now) {
+          game.evolve();
+          renderArray(game, graphicsContext);
+        }
+      };
     }
     
     public void redraw() {
