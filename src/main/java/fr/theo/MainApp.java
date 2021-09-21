@@ -1,6 +1,7 @@
 package fr.theo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ public class MainApp extends Application {
 
     static void play() throws IOException {setRoot("game-view");}
     static void menu() throws IOException {setRoot("main-menu");}
+    static void settings() throws IOException {setRoot("settings-menu");}
 
     static void setRoot(String fxml) throws IOException {
         setRoot(fxml,stage.getTitle());

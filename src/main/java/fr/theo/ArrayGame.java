@@ -69,11 +69,7 @@ public class ArrayGame {
         }
     }
 
-    public void evolve() {
-        for (int index = 0; index < this.width * this.height; index++) this.past[index] = this.array[index];
-        for (int index = 0; index < this.width * this.height; index++) this.array[index] = this.future[index];
-        this.computeFuture(); 
-    }
+    public void evolve() {this.next();}
 
     public void next() {
         for (int index = 0; index < this.width * this.height; index++) this.past[index] = this.array[index];
@@ -108,3 +104,17 @@ public class ArrayGame {
         this.computeFuture();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
