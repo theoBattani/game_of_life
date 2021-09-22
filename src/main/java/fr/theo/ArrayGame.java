@@ -7,13 +7,16 @@ public class ArrayGame {
 
     public int getWidth() {return this.width;}
     public int getHeight() {return this.height;}
+
     public int[] getPast() {return this.past;}
     public int[] getArray() {return this.array;}
     public int[] getFuture() {return this.future;}
     
     ArrayGame(int width, int height) {
+
         this.width = width;
         this.height = height;
+
         this.past = new int[this.width * this.height];
         this.array = new int[this.width * this.height];
         this.future = new int[this.width * this.height];

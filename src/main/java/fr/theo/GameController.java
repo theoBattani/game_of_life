@@ -134,7 +134,6 @@ public class GameController {
 
       @Override
       public void handle(long now) {
-        System.out.println(frameRate);
         before(now);
         loop();
         after(now);
