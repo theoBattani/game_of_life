@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -152,10 +153,10 @@ public class GameController {
 
   public void renderArray(ArrayGame game, GraphicsContext gc) {
     for (int index = 0; index < game.getWidth() * game.getHeight(); index++) {
-      gc.setFill(game.getArray()[index] == 1? Color.GREEN: Color.DARKGREY);
+      gc.setFill(game.getArray()[index] == 1? Color.RED: Color.BLACK);
       gc.fillRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
-      gc.setStroke(Color.web("#333"));
-      gc.strokeRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
+      // gc.setStroke(Color.web("#333"));
+      // gc.strokeRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
     }
   }
 }

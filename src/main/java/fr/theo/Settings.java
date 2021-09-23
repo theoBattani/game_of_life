@@ -15,9 +15,9 @@ public class Settings {
     
     // Game settings
     private static int chunkSize;
-    private static double cellSize;
 
     // display settings
+    private static double cellSize;
     private static double aspectRatio;
     private static boolean fullScreen;
     private static int frameRate;
@@ -65,25 +65,30 @@ public class Settings {
         return chunkSize;
     }
 
-    private static double getCellSize() {
+    public static double getCellSize() {
         if (!initialized) init();
         return cellSize;
     }
 
-    private static double getAspectRatio() {
+    public static double getAspectRatio() {
         if (!initialized) init();
         return aspectRatio;
     }
 
-    private static boolean getFullScreen() {
+    public static boolean getFullScreen() {
         if (!initialized) init();
         return fullScreen;
     }
 
-    private static int getFrameRate() {
+    public static int getFrameRate() {
         if (!initialized) init();
         return frameRate;
     }
+    
+    public static void setChunkSize(int newChunkSize) {
+        chunkSize = newChunkSize;
+    }
+
 }
 
 

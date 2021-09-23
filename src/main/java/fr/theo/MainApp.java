@@ -12,8 +12,13 @@ import java.io.IOException;
 public class MainApp extends Application {
     private static Stage stage;
 
+    private void initSettings() {
+        Settings.setChunkSize(256);
+    }
+
     @Override
     public void start(Stage s) throws IOException {
+        initSettings();
         stage=s;
         stage.setTitle("Game of life");
         setRoot("main-menu");
@@ -40,6 +45,15 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+        abstract class A {
+            public void truc() {System.out.print("A");}
+        }
+        class B extends A {
+            @Override
+            public void truc() {System.out.print("B");}
+        }
+        B b = new B();
+        b.truc();
         launch(args);
     }
 }
