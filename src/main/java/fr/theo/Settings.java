@@ -17,20 +17,20 @@ public class Settings {
     private static int chunkSize;
 
     // display settings
-    private static double cellSize;
+    private static double zoom;
     private static double aspectRatio;
     private static boolean fullScreen;
     private static int frameRate;
 
-    private static void writeFile() throws IOException {
+    private static void writeFile() throws IOException, IllegalArgumentException, IllegalAccessException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
         for (Field field: Settings.class.getFields()) {
-            writer.write(String.format("%s:%s", field.getName(), field.getGenericType()));
+            writer.write(String.format("%s:%s", field.getName(), field.get(Settings.class)));
         }
         writer.close();
     }
 
-    private static void readFile() throws IOException {
+    private static void readFile() throws IOException, ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line = reader.readLine();
         while (line != null) {
@@ -41,19 +41,35 @@ public class Settings {
         reader.close();
     }
 
-    private static void tidyUp(String name, Object value) {
-        try {
-            Settings.class.getField(name).set(Settings.class, value);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }
+    private static void tidyUp(String name, Object newValue) throws ClassNotFoundException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        final Field field = Class.forName(Settings.class.getName()).getDeclaredField(name);
+        field.setAccessible(true);
+        final Object oldValue = field.get(Class.forName(Settings.class.getName()));
+        field.set(oldValue, newValue);
+        // try {
+        //     Class.forName("Settings").getField(name).set(Class.forName("Settings").getField(name).get(Settings.class), value);
+        // } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     private static void init() {
         try {
             readFile();
             initialized = true;
-        } catch (SecurityException | IOException e) {
+        } catch (SecurityException | IOException | ClassNotFoundException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void save() {
+        try {
+            writeFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -67,7 +83,7 @@ public class Settings {
 
     public static double getCellSize() {
         if (!initialized) init();
-        return cellSize;
+        return zoom;
     }
 
     public static double getAspectRatio() {
@@ -89,6 +105,10 @@ public class Settings {
         chunkSize = newChunkSize;
     }
 
+    public static void setZoom(int newZoom) {
+        zoom = newZoom;
+    
+    }
 }
 
 
