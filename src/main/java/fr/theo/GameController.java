@@ -63,8 +63,8 @@ public class GameController {
       mouseDeltaY = event.getY() - mouseY;
       mouseX = event.getX();
       mouseY = event.getY();
-      System.out.printf("%f, %f : %f, %f", mouseX, mouseY, mouseDeltaX, mouseDeltaY);
-      System.out.println(event.getButton()); 
+      // System.out.printf("%f, %f : %f, %f", mouseX, mouseY, mouseDeltaX, mouseDeltaY);
+      // System.out.println(event.getButton()); 
       if (event.getButton() == MouseButton.PRIMARY) {
         int x = (int) Math.floor(event.getX() / zoom);
         int y = (int) Math.floor(event.getY() / zoom);
@@ -72,7 +72,7 @@ public class GameController {
         redraw();
       } else if (event.getButton() == MouseButton.SECONDARY) {
         DoubleProperty translateXProperty = canvas.translateXProperty();
-        DoubleProperty translateYProperty = canvas.translateXProperty();
+        DoubleProperty translateYProperty = canvas.translateYProperty();
         translateXProperty.set(translateXProperty.get() + mouseDeltaX);
         translateYProperty.set(translateYProperty.get() + mouseDeltaY);
       }
@@ -81,11 +81,13 @@ public class GameController {
 
   @FXML
   void mouseReleasedOnCanvas(MouseEvent event) {
-    int x = (int) Math.floor(event.getX() / zoom);
-    int y = (int) Math.floor(event.getY() / zoom);
-    game.addCell(x, y);
-    redraw();
-    mousePressed = false;
+    if (event.getButton() == MouseButton.PRIMARY) {
+      int x = (int) Math.floor(event.getX() / zoom);
+      int y = (int) Math.floor(event.getY() / zoom);
+      game.addCell(x, y);
+      redraw();
+      mousePressed = false;
+    } 
   }
 
   @FXML
