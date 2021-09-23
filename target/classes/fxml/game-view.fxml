@@ -2,46 +2,56 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onContextMenuRequested="#contextMenuRequestOnPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.GameController">
+<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.theo.GameController">
    <children>
-      <Canvas fx:id="canvas" onMouseDragged="#mouseDraggedOnCanvas" onMousePressed="#mousePressedCanvas" onMouseReleased="#mouseReleasedOnCanvas" />
-      <Pane layoutY="400.0" prefHeight="80.0" prefWidth="640.0" style="-fx-background-color: #222;">
+      <Canvas fx:id="canvas" height="154.0" onMouseDragged="#mouseDraggedOnCanvas" onMousePressed="#mousePressedOnCanvas" onMouseReleased="#mouseReleasedOnCanvas" width="200.0" />
+      <HBox>
          <children>
-            <Button layoutX="289.0" layoutY="29.0" mnemonicParsing="false" onAction="#onPause" text="||">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="259.0" layoutY="29.0" mnemonicParsing="false" onAction="#onPrevious" text="&lt;-">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font></Button>
-            <Button layoutX="319.0" layoutY="29.0" mnemonicParsing="false" onAction="#onPlay" text="|&gt;">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font></Button>
-            <Button layoutX="348.0" layoutY="29.0" mnemonicParsing="false" onAction="#onNext" text="-&gt;">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font></Button>
-            <Button layoutX="583.0" layoutY="29.0" mnemonicParsing="false" onAction="#onExit" text="Exit">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font></Button>
-            <Button layoutX="540.0" layoutY="29.0" mnemonicParsing="false" onAction="#onMenu" text="Menu">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="491.0" layoutY="29.0" mnemonicParsing="false" onAction="#onClear" text="Clear">
-               <font>
-                  <Font name="Consolas Bold" size="12.0" />
-               </font>
-            </Button>
+            <VBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onMenu" prefWidth="64.0" text="Menu">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onClear" prefWidth="64.0" text="Clear">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onPlay" prefWidth="64.0" text="|&gt;">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onPause" prefWidth="64.0" text="||">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onNext" prefWidth="64.0" text="-&gt;">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onPrevious" prefWidth="64.0" text="&lt;-">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onExit" prefWidth="64.0" text="Exit">
+                     <font>
+                        <Font name="Consolas Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
-      </Pane>
+      </HBox>
    </children>
 </Pane>

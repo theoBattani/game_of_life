@@ -9,13 +9,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+
+import javafx.scene.input.MouseEvent;
 
 public class GameController {
 
@@ -29,19 +30,20 @@ public class GameController {
   private Canvas canvas; // Value injected by FXMLLoader
   private GraphicsContext graphicsContext;
   private ArrayGame game;
-  private AnimationTimer timer;
+  private AnimationTimer animationTimer;
+  private FixedFrameRateTimer timer;
 
-  private boolean mousePressed;
+  private boolean mousePressed = false;
 
   @FXML
-  void mousePressedCanvas(MouseEvent event) {
+  void mousePressedOnCanvas(MouseEvent event) {
     mousePressed = true;
     int x = (int) Math.floor(event.getX() / 10);
     int y = (int) Math.floor(event.getY() / 10);
     game.addCell(x, y);
     redraw();
   }
-  
+
   @FXML
   void mouseDraggedOnCanvas(MouseEvent event) {
     if (mousePressed) {
@@ -75,16 +77,19 @@ public class GameController {
 
   @FXML
   void onPause(ActionEvent event) {
+    // animationTimer.stop();
     timer.stop();
   }
 
   @FXML
   void onPlay(ActionEvent event) {
+    // animationTimer.start();
     timer.start();
   }
 
   @FXML
   void onClear(ActionEvent event) {
+    // animationTimer.stop();
     timer.stop();
     game.clear();
     redraw();
@@ -106,54 +111,64 @@ public class GameController {
     graphicsContext = canvas.getGraphicsContext2D();
     game = new ArrayGame(64, 40);
     renderArray(game, graphicsContext);
-    mousePressed = false;
   }
 
   public GameController() {
-    timer = new AnimationTimer(){
-      private final long SECOND_NANO = 1000000000;
-      private int frameCount = 0;
-      private float frameRate = 0;
-      private long deltaTime = 0;
-      private long timeCounter = 0;
-      private long time = System.nanoTime();
-
-      private void before(long now) {
-        deltaTime = now - time;
-        timeCounter += deltaTime;
-        if (timeCounter > SECOND_NANO) {
-          frameRate = frameCount;
-          frameCount = 0;
-          timeCounter %= SECOND_NANO;
+      timer = new FixedFrameRateTimer(60){
+        @Override
+        void loop() {
+            render();
+            System.out.println(getFrameRate());
         }
-      }
+          
+      };
+    // animationTimer = new AnimationTimer(){
+    //   private final long SECOND_NANO = 1000000000;
+    //   private int frameCount = 0;
+    //   private float frameRate = 0;
+    //   private long deltaTime = 0;
+    //   private long timeCounter = 0;
+    //   private long time = System.nanoTime();
+      
+    //   private long lastUpdate = time;
+    //   private boolean makeUpdate = true;
 
-      private void after(long now) {
-        frameCount++;
-        time = now;
-      }
+    //   private void before(long now) {
+    //     deltaTime = now - time;
+    //     time = now;
+    //     timeCounter += deltaTime;
+    //     if (timeCounter > SECOND_NANO) {
+    //       frameRate = frameCount;
+    //       frameCount = 0;
+    //       timeCounter %= SECOND_NANO;
+    //     }
+    //   }
 
-      @Override
-      public void handle(long now) {
-        before(now);
-        loop();
-        after(now);
-      }
-    };
+    //   private void after(long now) {
+    //     frameCount++;
+    //   }
+
+    //   @Override
+    //   public void handle(long now) {
+    //     before(now);
+    //     loop();
+    //     after(now);
+    //   }
+    // };
   }
 
-  public void loop() {
+  public void render() {
     game.evolve();
     renderArray(game, graphicsContext);
   }
-  
+
   public void redraw() {
     renderArray(game, graphicsContext);
   }
 
   public void renderArray(ArrayGame game, GraphicsContext gc) {
     for (int index = 0; index < game.getWidth() * game.getHeight(); index++) {
-      gc.setFill(game.getArray()[index] == 1? Color.RED: Color.BLACK);
+      gc.setFill(game.getArray()[index] == 1? Color.GREENYELLOW: Color.BLACK);
       gc.fillRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);
       // gc.setStroke(Color.web("#333"));
       // gc.strokeRect((index % game.getWidth()) * 10, (index / game.getWidth()) * 10, 10, 10);

@@ -44,16 +44,5 @@ public class MainApp extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
-        abstract class A {
-            public void truc() {System.out.print("A");}
-        }
-        class B extends A {
-            @Override
-            public void truc() {System.out.print("B");}
-        }
-        B b = new B();
-        b.truc();
-        launch(args);
-    }
+    public static void main(String[] args) {launch(args); }
 }
