@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class GameController {
 
@@ -142,6 +143,7 @@ public class GameController {
     graphicsContext = canvas.getGraphicsContext2D();
     game = new ArrayGame(256, 256);
     renderArray(game, graphicsContext);
+    canvas.setVisible(false);
   }
 
   private void widthPropertyCallback(Observable stageWidthProperty) {

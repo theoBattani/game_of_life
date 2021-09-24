@@ -108,7 +108,7 @@ public class Game {
     Chunk(int x, int y) {
       this.x = x;
       this.y = y;
-      this.size = Locales.SMALL_CHUNK_SIZE;
+      this.size = Local.S_CHUNK_SIZE;
       this.length = size * size;
     }
   
