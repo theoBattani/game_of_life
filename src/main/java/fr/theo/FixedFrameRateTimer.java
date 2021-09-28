@@ -17,6 +17,8 @@ public abstract class FixedFrameRateTimer extends AnimationTimer {
     private long deltaTime = 0;
     private long timeCounter = 0;
     private long last = System.nanoTime();
+
+    private boolean running;
     
     public FixedFrameRateTimer(double FPSWanted) {
         frameRateWanted = FPSWanted;
@@ -24,6 +26,19 @@ public abstract class FixedFrameRateTimer extends AnimationTimer {
     }
 
     public double getFrameRate() {return frameRate;}
+    public boolean isRunning() {return running;}
+
+    @Override
+    public void start() {
+        running = true;
+        super.start();
+    }
+
+    @Override
+    public void stop() {
+        running = false;
+        super.stop();
+    }
 
     @Override
     public void handle(long now) {

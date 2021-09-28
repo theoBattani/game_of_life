@@ -18,8 +18,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class GameController {
 
@@ -29,14 +27,11 @@ public class GameController {
   @FXML // URL location of the FXML file that was given to the FXMLLoader
   private URL location;
 
-  @FXML
-  Pane pane;
-
   @FXML // fx:id="canvas"
   private Canvas canvas; // Value injected by FXMLLoader
   private GraphicsContext graphicsContext;
 
-  private double zoom = 16;
+  private double zoom = 8;
 
   private ArrayGame game;
 
@@ -48,18 +43,22 @@ public class GameController {
 
   @FXML
   void mousePressedOnCanvas(MouseEvent event) {
-    mousePressed = true;
-    mouseX = event.getX();
-    mouseY = event.getY();
-    int x = (int) Math.floor(event.getX() / zoom);
-    int y = (int) Math.floor(event.getY() / zoom);
-    game.addCell(x, y);
-    redraw();
+      mousePressed = true;
+      mouseX = event.getX();
+      mouseY = event.getY();
+    if (event.getButton() == MouseButton.PRIMARY) {
+      int x = (int) Math.floor(event.getX() / zoom);
+      int y = (int) Math.floor(event.getY() / zoom);
+      game.addCell(x, y);
+      redraw();
+    }
+    
   }
 
   @FXML
   void mouseDraggedOnCanvas(MouseEvent event) {
     if (mousePressed) {
+      
       mouseDeltaX = event.getX() - mouseX;
       mouseDeltaY = event.getY() - mouseY;
       mouseX = event.getX();
@@ -72,22 +71,29 @@ public class GameController {
         game.addCell(x, y);
         redraw();
       } else if (event.getButton() == MouseButton.SECONDARY) {
+        boolean stopped = false;
+        if (timer.isRunning()) {
+          timer.stop();
+          stopped = true;
+        }
         DoubleProperty translateXProperty = canvas.translateXProperty();
         DoubleProperty translateYProperty = canvas.translateYProperty();
         translateXProperty.set(translateXProperty.get() + mouseDeltaX);
         translateYProperty.set(translateYProperty.get() + mouseDeltaY);
+        if (stopped) timer.start();
       }
+      
     }
   }
 
   @FXML
   void mouseReleasedOnCanvas(MouseEvent event) {
+      mousePressed = false;
     if (event.getButton() == MouseButton.PRIMARY) {
       int x = (int) Math.floor(event.getX() / zoom);
       int y = (int) Math.floor(event.getY() / zoom);
       game.addCell(x, y);
       redraw();
-      mousePressed = false;
     } 
   }
 
@@ -136,14 +142,14 @@ public class GameController {
     MainApp.getStage().widthProperty().addListener(widthProperty -> widthPropertyCallback(widthProperty));
     MainApp.getStage().heightProperty().addListener(heightProperty -> heightPropertyCallback(heightProperty));
     assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'game-view.fxml'.";
-    canvas.setWidth(640);
-    canvas.setHeight(400);
-    canvas.widthProperty().addListener(event -> redraw());
-    canvas.heightProperty().addListener(event -> redraw());
     graphicsContext = canvas.getGraphicsContext2D();
     game = new ArrayGame(256, 256);
+    canvas.setWidth(640);
+    canvas.setHeight(480);
+    canvas.widthProperty().addListener(event -> redraw());
+    canvas.heightProperty().addListener(event -> redraw());
+    canvas.setVisible(true);
     renderArray(game, graphicsContext);
-    canvas.setVisible(false);
   }
 
   private void widthPropertyCallback(Observable stageWidthProperty) {

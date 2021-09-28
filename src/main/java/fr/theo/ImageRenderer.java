@@ -34,6 +34,11 @@ public abstract class ImageRenderer {
     pixelWriter.setColor(x, y, color);
   }
 
+  public Image render() {
+    draw();
+    return this.image;
+  }
+
   public abstract void draw();
 }
 
